@@ -2,49 +2,61 @@
 <html ng-app="gemStore">
 <head>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
 
     <link href="css/bootstrap.min.css" rel="stylesheet" />
 
     <script src="js/angular.min.js"></script>
     <script src="js/app.js"></script>
 </head>
-<body class="list-group" ng-controller="StoreController as store">
-    <div class="list-group-item" ng-repeat="product in store.products">
-        <h3>
-            {{ product.name }}
-            <em class="pull-right">{{ product.price | currency}}</em>
-        </h3>
-        <div class="gallery" ng-show="product.images.length">
-            <div class="img-wrap">
-                <img ng-src="{{product.images[0]}}" />
-            </div>
-            <ul class="thumbnail clearfix">
-                <li class="pull-left thumbnail" ng-repeat="image in product.images">
-                    <img style="height:50px; width:50px;" ng-src="{{image}}" />
-                </li>
-            </ul>
-            <section>
-                <ul class="nav nav-pills">
-                    <li ng-class="{active:tab === 1}"><a href ng-click="tab = 1">Description</a></li>
-                    <li ng-class="{active:tab === 2}"><a href ng-click="tab = 2">Specification</a></li>
-                    <li ng-class="{active:tab === 3}"><a href ng-click="tab = 3">Reviews</a></li>
+<body ng-controller="StoreController as store">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="product in store.products">
+                        <h4>{{product.name}}
+                            <em class="pull-right">{{product.price | currency}}</em>
+                        </h4>
+                        <div class="">
+                            <img ng-src="{{product.images[0]}}" />
+                        </div>
+                        <ul class="clearfix">
+                            <li class="thumbnail pull-left" ng-repeat="image in product.images">
+                                <a href="#">
+                                    <img ng-src="{{image}}" height="50" width="50" alt="...">
+                                </a>
+                            </li>
+                        </ul>
+                        <section ng-controller="PanelController as panel">
+                            <ul class="nav nav-pills pull-left">
+                                <li role="presentation" ng-class="{active:panel.isSelected(1)}"><a href ng-click="panel.selectTab(1)">Description</a></li>
+                                <li role="presentation" ng-class="{active:panel.isSelected(2)}"><a href ng-click="panel.selectTab(2)">Specification</a></li>
+                                <li role="presentation" ng-class="{active:panel.isSelected(3)}"><a href ng-click="panel.selectTab(3)">Reviews</a></li>
+                            </ul>
+                            <div class="panel" style="clear:both;" ng-show="panel.isSelected(1)">
+                                <div class="panel-body">
+                                    <h4>Description</h4>
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="panel" style="clear:both;" ng-show="panel.isSelected(2)">
+                                <div class="panel-body">
+                                    <h4>Specifications</h4>
+                                    <p>No yet specified</p>
+                                </div>
+                            </div>
+                            <div class="panel" style="clear:both;" ng-show="panel.isSelected(3)">
+                                <div class="panel-body">
+                                    <h4>Reviews</h4>
+                                    <p>No yet specified</p>
+                                </div>
+                            </div>
+                        </section>
+                    </li>
                 </ul>
-            </section>
-            <div class="panel panel-default" ng-show="tab === 1">
-                <h4>Description</h4>
-                <p>{{product.description}}</p>
-            </div>
-            <div class="panel panel-default" ng-show="tab === 2">
-                <h4>Specification</h4>
-                <blockquote>none yet</blockquote>
-            </div>
-            <div class="panel panel-default" ng-show="tab === 3">
-                <h4>Reviews</h4>
-                <blockquote>none yet</blockquote>
             </div>
         </div>
-        
     </div>
 </body>
 </html>

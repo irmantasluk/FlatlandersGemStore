@@ -1,11 +1,22 @@
 ﻿(function () {
-
+    
     var app = angular.module("gemStore", []);
 
     app.controller("StoreController", function () {
-
         this.products = gems;
+    });
 
+    app.controller("PanelController", function () {
+
+        this.tab = 1;
+
+        this.selectTab = function (selectedTab) {
+            this.tab = selectedTab;
+        };
+
+        this.isSelected = function (checkedTab) {
+            return this.tab === checkedTab;
+        };
     });
 
     var gems = [{
